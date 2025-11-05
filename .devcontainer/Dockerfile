@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     ffmpeg \
     sudo \
+    ncdu \
     && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user 'dev' with sudo access
