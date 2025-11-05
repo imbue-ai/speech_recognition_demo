@@ -4,10 +4,6 @@ FROM ubuntu:24.04
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Copy uv from official image
-# See: https://docs.astral.sh/uv/guides/integration/docker/#caching
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -21,6 +17,9 @@ RUN apt-get update && apt-get install -y \
     sudo \
     ncdu \
     && rm -rf /var/lib/apt/lists/*
+
+# Copy uv from official image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Create non-root user 'dev' with sudo access
 RUN useradd -m dev \
@@ -39,7 +38,8 @@ ENV HF_HOME=/home/dev/models
 # ============================================================================
 
 # Pre-create uv virtual environment and install dependencies
-# Install dependencies first (without the project itself) to maximize layer caching
+# Install dependencies first (without the project itself) to maximize layer caching.
+# See: https://docs.astral.sh/uv/guides/integration/docker/#caching
 COPY --chown=dev:dev pyproject.toml uv.lock /tmp/deps/
 ENV UV_PROJECT_ENVIRONMENT=/home/dev/venv
 RUN cd /tmp/deps && \
@@ -61,8 +61,7 @@ RUN cd /tmp/deps && \
 # Clean up temporary files
 RUN rm -rf /tmp/deps
 
-# Set working directory to the workspace mount point
-WORKDIR /workspace
+WORKDIR /home/dev
 
 # Default command
 CMD ["bash"]
