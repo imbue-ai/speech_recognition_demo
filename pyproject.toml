@@ -1,7 +1,7 @@
 [project]
 name = "speech-recognition-demo"
 version = "0.1.0"
-description = "Minimal speech recognition demo with devcontainer cache pre-warming"
+description = "Minimal speech recognition demo with dev container cache pre-warming"
 requires-python = ">=3.11"
 dependencies = [
     "transformers>=4.53.0",

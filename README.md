@@ -1,6 +1,6 @@
 # Speech Recognition Demo
 
-A minimal Python project demonstrating a devcontainer for speech recognition in Python.
+A minimal Python project demonstrating a dev container for speech recognition in Python.
 
 - **UV cache pre-warming**: Dependencies are installed during container build
 - **Hugging Face model pre-downloading**: Models are downloaded into the container image
