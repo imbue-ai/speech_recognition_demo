@@ -1,10 +1,9 @@
 # Speech Recognition Demo
 
-A minimal Python project demonstrating speech recognition using Hugging Face Transformers. This project showcases:
+A minimal Python project demonstrating a Devcontainer for speech recognition:
 
 - **UV cache pre-warming**: Dependencies are installed during container build
 - **Hugging Face model pre-downloading**: Models are downloaded into the container image
-- **Minimal boilerplate**: Clean, simple code structure
 
 ## Project Structure
 
@@ -28,42 +27,14 @@ The Dockerfile demonstrates:
 2. **Model pre-downloading**: Whisper-tiny model is downloaded during build
 3. **Optional Parakeet model**: Commented out example for larger model (~2.4GB)
 
-### Models Included
-- **whisper-tiny** (enabled): Small, fast model for demos
-- **nvidia/parakeet-tdt-0.6b-v3** (commented): Larger, more accurate model
-
 ## Usage
 
-### In Dev Container
 ```bash
 # Transcribe audio file
 uv run transcribe test_data/OSR_us_000_0010_8k.wav
 
 # Run tests
 uv run pytest test_transcribe.py
-```
-
-### Local Installation
-```bash
-# Install dependencies
-uv sync
-
-# Transcribe audio
-uv run transcribe test_data/OSR_us_000_0010_8k.wav -o output.txt
-
-# Run tests
-uv run pytest
-```
-
-## Testing
-
-Uses [Syrupy](https://github.com/tophat/syrupy) for snapshot testing:
-```bash
-# Run test (creates snapshot on first run)
-uv run pytest test_transcribe.py
-
-# Update snapshots
-uv run pytest test_transcribe.py --snapshot-update
 ```
 
 ## Development Container
@@ -87,11 +58,3 @@ npm install -g @devcontainers/cli
 # Build the image
 devcontainer build --workspace-folder .
 ```
-
-This will build the Docker image with all dependencies and models pre-downloaded. You can then use `ncdu` inside the container to inspect disk usage of the models and cache.
-
-## Requirements
-
-- Python 3.11+
-- UV (installed automatically in dev container)
-- FFmpeg (for audio processing, included in container)
