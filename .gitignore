@@ -32,7 +32,7 @@ htmlcov/
 # Note: __snapshots__/ should be committed for syrupy tests
 
 # UV
-uv.lock
+# Note: uv.lock should be committed for reproducible builds
 
 # Models and cache
 models/

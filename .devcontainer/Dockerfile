@@ -5,6 +5,7 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Copy uv from official image
+# See: https://docs.astral.sh/uv/guides/integration/docker/#caching
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Install system dependencies
@@ -37,10 +38,11 @@ ENV HF_HOME=/home/dev/models
 # ============================================================================
 
 # Pre-create uv virtual environment and install dependencies
-COPY --chown=dev:dev pyproject.toml /tmp/deps/
+# Install dependencies first (without the project itself) to maximize layer caching
+COPY --chown=dev:dev pyproject.toml uv.lock /tmp/deps/
 ENV UV_PROJECT_ENVIRONMENT=/home/dev/venv
 RUN cd /tmp/deps && \
-    uv sync --frozen && \
+    uv sync --locked --no-install-project && \
     echo "Python virtual environment created successfully at $UV_PROJECT_ENVIRONMENT"
 
 # Pre-download Whisper-tiny model (small, fast model for demos)
