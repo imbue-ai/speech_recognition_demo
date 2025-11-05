@@ -76,6 +76,20 @@ The `.devcontainer` setup demonstrates efficient caching:
 
 To enable the Parakeet model, uncomment the lines in `.devcontainer/Dockerfile`.
 
+### Building the Docker Image
+
+To build the Docker image locally, you can use the `devcontainer` CLI:
+
+```bash
+# Install the devcontainer CLI
+npm install -g @devcontainers/cli
+
+# Build the image
+devcontainer build --workspace-folder .
+```
+
+This will build the Docker image with all dependencies and models pre-downloaded. You can then use `ncdu` inside the container to inspect disk usage of the models and cache.
+
 ## Requirements
 
 - Python 3.11+
