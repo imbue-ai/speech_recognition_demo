@@ -4,6 +4,9 @@ FROM ubuntu:24.04
 # Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Copy uv from official image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -24,10 +27,6 @@ RUN useradd -m dev \
 # Switch to dev user for subsequent operations
 USER dev
 WORKDIR /home/dev
-
-# Install uv for fast Python package management
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-ENV PATH="/home/dev/.local/bin:${PATH}"
 
 # Create directories for caching with proper ownership
 RUN mkdir -p /home/dev/models

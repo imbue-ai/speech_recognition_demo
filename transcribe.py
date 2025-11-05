@@ -32,7 +32,7 @@ def transcribe_audio(audio_path: Path, model_name: str = "openai/whisper-tiny") 
     )
 
     typer.echo(f"Transcribing: {audio_path}")
-    result = asr_pipeline(str(audio_path))
+    result = asr_pipeline(str(audio_path), return_timestamps=True)
 
     return result["text"].strip()
 

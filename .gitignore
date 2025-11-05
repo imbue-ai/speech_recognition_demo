@@ -29,7 +29,7 @@ wheels/
 .coverage
 htmlcov/
 .tox/
-__snapshots__/
+# Note: __snapshots__/ should be committed for syrupy tests
 
 # UV
 uv.lock
